@@ -12,3 +12,27 @@ I need this code, but don't know where, perhaps should make some middleware, don
 
 Go code!
 */
+require("dotenv").config();
+const path = require("path");
+const express = require("express");
+const cors = require("cors");
+const actionsRouter = require("./actionsRouter");
+const projectsRouter = require("./projectsRouter");
+
+const app = express();
+
+app.use(express.static(path.join(__dirname, "client/build")))
+app.use(express.json());
+app.use(cors());
+app.use("/actions", actionsRouter);
+app.use("/projects", projectsRouter);
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client/build", "index.js"))
+})
+
+const PORT = process.env.PORT || 9000;
+
+app.listen(PORT, () => {
+  console.log(`listening on ${PORT}`);
+});
