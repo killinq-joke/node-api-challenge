@@ -49,8 +49,8 @@ projects.get("/:id/actions", mid.ValidateProjectsID, (req, res) => {
     });
 });
 
-projects.post("/", (req, res) => {
-    const project = req.body;
+projects.post("/", mid.ValidateProjectsBody, (req, res) => {
+    const {project} = req.projects;
   projectsHelpers
     .insert(project)
     .then(response => {
@@ -61,11 +61,10 @@ projects.post("/", (req, res) => {
     });
 });
 
-projects.put("/:id", mid.ValidateProjectsID, (req, res) => {
-    const {id} = req.projects;
-    const change = req.body;
+projects.put("/:id", mid.ValidateProjectsID, mid.ValidateProjectsBody, (req, res) => {
+    const {id, project} = req.projects;
   projectsHelpers
-    .update(id, change)
+    .update(id, project)
     .then(response => {
         if (!response) {
             res.status(404).json("Please provide an existing ID")

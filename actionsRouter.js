@@ -29,8 +29,8 @@ actions.get("/:id", middleware.ValidateActionsID, (req, res) => {
     })
 })
 
-actions.post("/", (req, res) => {
-    const action = req.body;
+actions.post("/", middleware.ValidateActionsBody, (req, res) => {
+    const {action} = req.actions;
     actionHelpers.insert(action)
     .then(response => {
         res.status(200).json(response)
@@ -40,11 +40,10 @@ actions.post("/", (req, res) => {
     })
 })
 
-actions.put("/:id", middleware.ValidateActionsID, (req, res) => {
-    const {id} = req.actions;
-    const change = req.body;
+actions.put("/:id", middleware.ValidateActionsID, middleware.ValidateActionsBody, (req, res) => {
+    const {id, action} = req.actions;
     
-    actionHelpers.update(id, change)
+    actionHelpers.update(id, action)
     .then(response => {
         if (!response) {
             res.status(404).json("Please provide an existing ID")
