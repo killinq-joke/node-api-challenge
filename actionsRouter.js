@@ -49,5 +49,17 @@ actions.put("/:id", middleware.ValidateID, (req, res) => {
     })
 })
 
+actions.delete("/:id", middleware.ValidateID, (req, res) => {
+    const {id} = req.actions;
+    
+    actionHelpers.remove(id)
+    .then(response => {
+        res.status(200).json("deleted")
+    })
+    .catch(err => {
+        res.status(500).end()
+    })
+})
+
 
 module.exports = actions
