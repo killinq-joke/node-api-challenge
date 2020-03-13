@@ -12,3 +12,18 @@ I need this code, but don't know where, perhaps should make some middleware, don
 
 Go code!
 */
+const express = require("express");
+const cors = require("cors");
+const actions = require("./actions")
+
+const app = express();
+
+app.use(express.json())
+app.use(cors())
+app.use("/actions", actions)
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+    console.log(`listening on ${PORT}`)
+})
