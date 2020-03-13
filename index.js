@@ -14,13 +14,15 @@ Go code!
 */
 const express = require("express");
 const cors = require("cors");
-const actions = require("./actions")
+const actionsRouter = require("./actionsRouter")
+const projectsRouter = require("./projectsRouter")
 
 const app = express();
 
 app.use(express.json())
 app.use(cors())
-app.use("/actions", actions)
+app.use("/actions", actionsRouter)
+app.use("/projects", projectsRouter)
 
 const PORT = process.env.PORT || 5000;
 
