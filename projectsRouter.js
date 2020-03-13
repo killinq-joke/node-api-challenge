@@ -1,5 +1,6 @@
 const express = require("express");
 const projectsHelpers = require("./data/helpers/projectModel");
+const mid = require("./middleware");
 
 const projects = express.Router();
 
@@ -14,24 +15,34 @@ projects.get("/", (req, res) => {
     });
 });
 
-projects.get("/:id", (req, res) => {
-    const {id} = req.params;
+projects.get("/:id", mid.ValidateProjectsID, (req, res) => {
+    const {id} = req.projects;
   projectsHelpers
     .get(id)
     .then(response => {
-      res.status(200).json(response);
+        if (!response) {
+            res.status(404).json("Please provide an existing ID")
+        } else {
+            res.status(200).json(response);
+        }
+      
     })
     .catch(err => {
       res.status(500);
     });
 });
 
-projects.get("/:id/actions", (req, res) => {
+projects.get("/:id/actions", mid.ValidateProjectsID, (req, res) => {
     const {id} = req.params;
   projectsHelpers
     .getProjectActions(id)
     .then(response => {
-      res.status(200).json(response);
+        if (!response) {
+            res.status(404).json("Please provide an existing ID")
+        } else {
+            res.status(200).json(response);
+        }
+      
     })
     .catch(err => {
       res.status(500);
@@ -50,25 +61,35 @@ projects.post("/", (req, res) => {
     });
 });
 
-projects.put("/:id", (req, res) => {
+projects.put("/:id", mid.ValidateProjectsID, (req, res) => {
     const {id} = req.params;
     const change = req.body;
   projectsHelpers
     .update(id, change)
     .then(response => {
-      res.status(200).json(response);
+        if (!response) {
+            res.status(404).json("Please provide an existing ID")
+        } else {
+            res.status(200).json(response);
+        }
+      
     })
     .catch(err => {
       res.status(500);
     });
 });
 
-projects.delete("/:id", (req, res) => {
+projects.delete("/:id", mid.ValidateProjectsID, (req, res) => {
     const {id} = req.params;
   projectsHelpers
     .remove(id)
     .then(response => {
-      res.status(200).json(response);
+        if (!response) {
+            res.status(404).json("Please provide an existing ID")
+        } else {
+            res.status(200).json(response);
+        }
+      
     })
     .catch(err => {
       res.status(500);

@@ -1,12 +1,22 @@
 module.exports = {
-    ValidateID,
+    ValidateActionsID,
+    ValidateProjectsID
 }
 
-function ValidateID(req, res, next) {
+function ValidateActionsID(req, res, next) {
     if (isNaN(req.params.id)) {
-        res.status(400).end()
+        res.status(400).json("Please provide a correct ID")
     } else {
-        req.actions = {id: req.params.id}
+        req.actions = {...req.params}
+        next()
+    }
+}
+
+function ValidateProjectsID(req, res, next) {
+    if (isNaN(req.params.id)) {
+        res.status(400).json("Please provide a correct ID")
+    } else {
+        req.projects = {...req.params}
         next()
     }
 }

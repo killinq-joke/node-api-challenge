@@ -14,7 +14,7 @@ actions.get("/", (req, res) => {
     })
 })
 
-actions.get("/:id", middleware.ValidateID, (req, res) => {
+actions.get("/:id", middleware.ValidateActionsID, (req, res) => {
     const {id} = req.actions;
     actionHelpers.get(id)
     .then(response => {
@@ -36,7 +36,7 @@ actions.post("/", (req, res) => {
     })
 })
 
-actions.put("/:id", middleware.ValidateID, (req, res) => {
+actions.put("/:id", middleware.ValidateActionsID, (req, res) => {
     const {id} = req.actions;
     const change = req.body;
     
@@ -49,7 +49,7 @@ actions.put("/:id", middleware.ValidateID, (req, res) => {
     })
 })
 
-actions.delete("/:id", middleware.ValidateID, (req, res) => {
+actions.delete("/:id", middleware.ValidateActionsID, (req, res) => {
     const {id} = req.actions;
     
     actionHelpers.remove(id)
