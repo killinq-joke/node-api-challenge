@@ -7,7 +7,10 @@ function ValidateActionsID(req, res, next) {
     if (isNaN(req.params.id)) {
         res.status(400).json("Please provide a correct ID")
     } else {
-        req.actions = {...req.params}
+        if (!req.actions) {
+          req.actions = {}  
+        }
+        req.actions.id = req.params.id
         next()
     }
 }
@@ -16,7 +19,10 @@ function ValidateProjectsID(req, res, next) {
     if (isNaN(req.params.id)) {
         res.status(400).json("Please provide a correct ID")
     } else {
-        req.projects = {...req.params}
+        if (!req.projects) {
+            req.projects = {}
+        }
+        req.projects.id = req.params.id
         next()
     }
 }

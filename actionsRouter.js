@@ -18,10 +18,14 @@ actions.get("/:id", middleware.ValidateActionsID, (req, res) => {
     const {id} = req.actions;
     actionHelpers.get(id)
     .then(response => {
-        res.status(200).json(response)
+        if (!response) {
+            res.status(404).json("Please provide an existing ID")
+        } else {
+            res.status(200).json(response);
+        }
     })
     .catch(err => {
-        res.status(500).json(err)
+        res.status(500).end()
     })
 })
 
@@ -42,7 +46,11 @@ actions.put("/:id", middleware.ValidateActionsID, (req, res) => {
     
     actionHelpers.update(id, change)
     .then(response => {
-        res.status(200).json(response)
+        if (!response) {
+            res.status(404).json("Please provide an existing ID")
+        } else {
+            res.status(200).json(response);
+        }
     })
     .catch(err => {
         res.status(500).end()
@@ -54,7 +62,12 @@ actions.delete("/:id", middleware.ValidateActionsID, (req, res) => {
     
     actionHelpers.remove(id)
     .then(response => {
-        res.status(200).json("deleted")
+        if (!response) {
+            res.status(404).json("Please provide an existing ID")
+        } else {
+            res.status(200).json("deleted")
+        }
+
     })
     .catch(err => {
         res.status(500).end()

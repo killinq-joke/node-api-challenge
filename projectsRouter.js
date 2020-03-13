@@ -33,7 +33,7 @@ projects.get("/:id", mid.ValidateProjectsID, (req, res) => {
 });
 
 projects.get("/:id/actions", mid.ValidateProjectsID, (req, res) => {
-    const {id} = req.params;
+    const {id} = req.projects;
   projectsHelpers
     .getProjectActions(id)
     .then(response => {
@@ -62,7 +62,7 @@ projects.post("/", (req, res) => {
 });
 
 projects.put("/:id", mid.ValidateProjectsID, (req, res) => {
-    const {id} = req.params;
+    const {id} = req.projects;
     const change = req.body;
   projectsHelpers
     .update(id, change)
@@ -80,7 +80,7 @@ projects.put("/:id", mid.ValidateProjectsID, (req, res) => {
 });
 
 projects.delete("/:id", mid.ValidateProjectsID, (req, res) => {
-    const {id} = req.params;
+    const {id} = req.projects;
   projectsHelpers
     .remove(id)
     .then(response => {
